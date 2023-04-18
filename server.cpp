@@ -155,10 +155,10 @@ int main(int argc, char const *argv[])
                         }
                         else if(buf[0]=='2')
                         {
-                            // put
+                            //put
                             rlen=read(clients[i].fd,buf,BUFLEN);
-							if(rlen==0)continue;
-							buf[rlen]=0;
+                            if(rlen==0) continue;
+                            buf[rlen]=0;
                             send(clients[i].fd,"+",1,MSG_NOSIGNAL);
                             sprintf(buf1,"./server_dir/%s",buf);
                             clients[i].fp=fopen(buf1,"w");
@@ -168,8 +168,8 @@ int main(int argc, char const *argv[])
                         {
                             // get 
                             rlen=read(clients[i].fd,buf,BUFLEN);
-							if(rlen==0)continue;
-							buf[rlen]=0;
+                            if(rlen==0) continue;
+                            buf[rlen]=0;
                             sprintf(buf1,"./server_dir/%s",buf);
                             clients[i].fp=fopen(buf1,"r");
                             
@@ -191,15 +191,15 @@ int main(int argc, char const *argv[])
                         }
                         else if(buf[0]=='4')
                         {
-							rlen=read(clients[i].fd,buf,BUFLEN);
-							if(rlen==0)continue;
-							buf[rlen]=0;
+                            rlen=read(clients[i].fd,buf,BUFLEN);
+                            if(rlen==0)continue;
+                            buf[rlen]=0;
                             std::string newuser(buf);
                             if(username.find(newuser)==username.end())
                             {
                                 send(clients[i].fd,"+",1,MSG_NOSIGNAL);
                                 username.insert(newuser);
-								clients[i].name=newuser;
+                                clients[i].name=newuser;
                             }
                             else send(clients[i].fd,"-",1,MSG_NOSIGNAL);
                         }
@@ -212,10 +212,10 @@ int main(int argc, char const *argv[])
                     	int rlen=read(clients[i].fd,buf,20);
                     	if(rlen==0)
                     	{
-                    		fclose(clients[i].fp);
+                    	    fclose(clients[i].fp);
                             clients[i].fp=0;
                             continue;
-						}
+			}
                         buf[rlen]=0;
                         clients[i].remain=atoll(buf);
                         clients[i].status=22;
@@ -228,10 +228,10 @@ int main(int argc, char const *argv[])
                         int rlen=read(clients[i].fd,buf,min((ll)BUFLEN,clients[i].remain));
                         if(rlen==0)
                         {
-							fclose(clients[i].fp);
+			    fclose(clients[i].fp);
                             clients[i].fp=0;
                             continue;
-						}
+			}
                         buf[rlen]=0;
                         clients[i].remain-=rlen;
                         fwrite(buf,sizeof(char),rlen,clients[i].fp);
