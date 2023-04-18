@@ -103,18 +103,18 @@ int main(int argc, char const *argv[])
             }
             for(int i=(int)clients.size()-1;i>=0;i--)
             {
-				if(FD_ISSET(clients[i].fd,&select_setr))
-				{
-					int rlen=recv(clients[i].fd,buf,1,MSG_PEEK);
-					if(rlen==0)
-					{
-						username.erase(clients[i].name);
-						close(clients[i].fd);
-						swap(clients[i],clients.back());
-                        clients.pop_back();
-                        continue;
-					}
-				}
+		if(FD_ISSET(clients[i].fd,&select_setr))
+		{
+                    int rlen=recv(clients[i].fd,buf,1,MSG_PEEK);
+                    if(rlen==0)
+                    {    
+                    	username.erase(clients[i].name);
+                    	close(clients[i].fd);
+                    	swap(clients[i],clients.back());
+                    	clients.pop_back();
+                    	continue;
+                    }
+		}
                 if(clients[i].status==0)
                 {
                     if(FD_ISSET(clients[i].fd,&select_setr))
